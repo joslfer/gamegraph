@@ -15,3 +15,24 @@ payoffs = {
 
 def play_round(cooperates_a, cooperates_b):
     return payoffs[(cooperates_a, cooperates_b)]
+
+
+def total_payoffs_network(population):
+    payoffs = np.zeros(len(population))
+
+    for i, strategy_i in enumerate(population):
+        for j in list(G.neighbors(i)):
+            if i == j:
+                continue
+            payoff_i, payoff_j = play_round(population[i],population[j])
+            payoffs[i] += payoff_i
+            # print(f"Agent {i} vs Agent {j}: {population[i]} vs {population[j]} -> payoff_i={payoff_i}, accumulated={payoffs[i]}")
+    return np.array(payoffs)
+
+def new_population(population,payoffs,G):
+
+
+    ###
+
+    new_pop = population    
+    return new_pop
