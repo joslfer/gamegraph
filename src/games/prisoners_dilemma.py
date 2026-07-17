@@ -62,7 +62,6 @@ def plot_cooperation(coperatio, title = "Evolution of Cooperation"):
 
 
 
-
 def animate_network(history, G, pos, filename = "../images/network_evo.gif"):
     fig, ax = plt.subplots( dpi = 200)
     fig.subplots_adjust(top=0.92)
