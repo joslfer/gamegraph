@@ -1,7 +1,9 @@
 # Prisoner's Dilemma payoff function
 
 import numpy as np 
-
+import networkx as nx
+import matplotlib.pyplot as plt 
+from matplotlib.animation import FuncAnimation
 
 T = 5  # Temptation: payoff for defecting while the other cooperates
 R = 3  # Reward: payoff when both cooperate
@@ -42,3 +44,22 @@ def new_population(population,payoffs,G):
                 new_pop[i] = population[neighbour] 
                 paycompare = payoffs[neighbour]
     return new_pop
+
+
+def animate_network(history, G, pos, filename = "../images/network_evo.gif"):
+    fig, ax = plt.subplots( dpi = 200)
+    fig.subplots_adjust(top=0.92)
+    fig.tight_layout()
+
+    def update(frame):
+        ax.clear()
+        ax.set_title(f"Generation {frame} | Cooperation: {np.mean(history[frame]):.2%}",y=0.98)
+        node_colors = ["green" if strategy == True else "red" for strategy in history[frame]]
+        nx.draw(G,pos=pos,node_color=node_colors,node_size = 30, ax=ax)
+        ax.set_axis_off()
+        return
+    ani = FuncAnimation(fig,update,frames=len(history))
+    ani.save(filename, writer="pillow", fps = 5)
+    plt.close(fig)
+    return ani
+
