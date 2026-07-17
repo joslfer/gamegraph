@@ -46,6 +46,23 @@ def new_population(population,payoffs,G):
     return new_pop
 
 
+def plot_cooperation(coperatio, title = "Evolution of Cooperation"):
+    xaxis = np.arange(len(coperatio))
+    plt.figure(figsize=(8,4), dpi=200)
+
+    plt.plot(xaxis,coperatio, color = "black")
+    plt.fill_between(xaxis,0,coperatio, color ="green", alpha = 0.5, label = "Cooperators")
+    plt.fill_between(xaxis,coperatio,1, color = "red", alpha = 0.5, label = "Defectors")
+
+    plt.legend(loc="upper right", bbox_to_anchor=(0.95, 0.95))
+    plt.xlabel("Generation")
+    plt.title(title)
+    plt.grid(alpha = 0.3)
+    plt.show()
+
+
+
+
 def animate_network(history, G, pos, filename = "../images/network_evo.gif"):
     fig, ax = plt.subplots( dpi = 200)
     fig.subplots_adjust(top=0.92)
@@ -63,3 +80,16 @@ def animate_network(history, G, pos, filename = "../images/network_evo.gif"):
     plt.close(fig)
     return ani
 
+
+
+def simulate_network(population, G, N):
+    G = nx.convert_node_labels_to_integers(G)
+
+    coperatio = []
+    history = [population.copy()]
+    for generation in range(N):
+        payoffs = total_payoffs_network(population, G)
+        population = new_population(population, payoffs, G)
+        history.append(population.copy())
+        coperatio.append(np.mean(population))
+    return history, coperatio
