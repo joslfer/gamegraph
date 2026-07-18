@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 T = 5  # Temptation: payoff for defecting while the other cooperates
-R = 3  # Reward: payoff when both cooperate
+R = 4.5 # before 3  # Reward: payoff when both cooperate
 P = 1  # Punishment: payoff when both defect
 S = 0  # Sucker: payoff for cooperating while the other defects
 
